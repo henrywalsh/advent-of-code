@@ -18,4 +18,11 @@ fun main() {
         answerPartTwo = invalidProductFinderPartTwo.findSumOfInvalidIds(filePath)
     }
     println("partTwo: answer $answerPartTwo, time $timePartTwo")
+
+    var answerPartTwoFaster: Long = 0
+    val timePartTwoFaster = measureTime {
+        val invalidProductFinderPartTwoFaster = InvalidProductFinderPartTwoFaster()
+        answerPartTwoFaster = invalidProductFinderPartTwoFaster.findSumOfInvalidIds(filePath)
+    }
+    println("partTwoFaster: answer $answerPartTwoFaster, time $timePartTwoFaster")
 }
