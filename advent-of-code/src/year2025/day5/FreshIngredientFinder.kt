@@ -48,7 +48,7 @@ class FreshIngredientFinder {
     fun findAmountOfFreshIngredientIds(filePath: String): Long {
         var root: TreeNode = getInitialTree(filePath) ?: return 0
 
-        root = rebuildTreeUntilRangesUnique(root)
+        root = recomputeTreeUntilRangesUnique(root)
 
         return countTreeRanges(root)
     }
@@ -77,22 +77,22 @@ class FreshIngredientFinder {
         return root
     }
 
-    private fun rebuildTreeUntilRangesUnique(root: TreeNode): TreeNode {
+    private fun recomputeTreeUntilRangesUnique(root: TreeNode): TreeNode {
         var node = root
         var treeSize = TreeNode.getTreeSize(node)
         
         while (true) {
-            var rebuiltNode = TreeNode(node.min, node.max, null, null)
+            var recomputed = TreeNode(node.min, node.max, null, null)
 
-            rebuiltNode = TreeNode.recomputeTree(rebuiltNode, node)
-            node = rebuiltNode
+            recomputed = TreeNode.recomputeTree(recomputed, node)
+            node = recomputed
 
-            val rebuiltSize = TreeNode.getTreeSize(node)
-            if (treeSize == rebuiltSize) {
+            val recomputedSize = TreeNode.getTreeSize(node)
+            if (treeSize == recomputedSize) {
                 break
             }
 
-            treeSize = rebuiltSize
+            treeSize = recomputedSize
         }
 
         return node
