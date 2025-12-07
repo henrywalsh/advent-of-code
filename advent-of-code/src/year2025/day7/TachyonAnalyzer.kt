@@ -36,36 +36,32 @@ class TachyonAnalyzer {
     }
 
     fun partTwo(filePath: String): Long {
-        var activeBeams = mutableListOf<Long>()
+        var beams = Array<Long>(0) { 0 }
         var realities: Long = 0
 
         val inputStream: InputStream = File(filePath).inputStream()
         inputStream.bufferedReader().forEachLine {
-            if (activeBeams.isEmpty()) {
-                activeBeams = MutableList(it.length) { 0 }
+            if (beams.isEmpty()) {
+                beams = Array(it.length) { 0 }
                 for (i in 0..<it.length) {
                     if (it[i] == 'S') {
-                        activeBeams[i]++
+                        beams[i]++
                     }
                 }
             } else {
-                val newBeams = MutableList<Long>(it.length) { 0 }
                 for (i in 0..<it.length) {
-                    if (activeBeams[i] > 0) {
+                    if (beams[i] > 0) {
                         if (it[i] == '^') {
-                            newBeams[i - 1] += activeBeams[i]
-                            newBeams[i + 1] += activeBeams[i]
-                        } else {
-                            newBeams[i] += activeBeams[i]
+                            beams[i - 1] += beams[i]
+                            beams[i + 1] += beams[i]
+                            beams[i] = 0
                         }
                     }
                 }
-
-                activeBeams = newBeams
             }
         }
         
-        for (beam in activeBeams) {
+        for (beam in beams) {
             realities += beam
         }
 
